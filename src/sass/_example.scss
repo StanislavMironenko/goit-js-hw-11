@@ -1,28 +1,59 @@
-.example {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  line-height: 1.5;
-  background-color: #fff;
-  color: #2f2f37;
-  max-width: 960px;
-  padding: 16px;
+button{
+  margin-left: 20px;
+}
+a{
+  text-decoration: none;
+}
+.search-form{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background-color: aqua;
+  margin-bottom: 20px;
+}
+.is-hidden{
+  
+  
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: -1px;
+      border: 0;
+      padding: 0;
+      white-space: nowrap;
+      clip-path: inset(100%);
+      clip: rect(0 0 0 0);
+      overflow: hidden;
+ 
+}
+.gallery{
+  display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-.example code {
-  font-family: monospace;
-  font-size: 16px;
-  font-weight: 700;
-  background-color: #ff6b0a;
-  color: #fff;
-  padding: 2px 6px;
-  border-radius: 2px;
+img{
+  width: 100%;
+ height: 330px;
 }
-
-.example .background {
-  height: 240px;
-  // ❗️❗️❗️ The path to images from a SASS file
-  // is always the same as from the css folder.
-  background-image: url('../images/logo.png');
-  background-size: cover;
-  background-position: center;
+.gallery__item:not(:last-child) {
+  margin-bottom: 30px;
+}
+.info{
+  display: flex;
+  font-size: 18px;
+  color: black;
+}
+.info-item{
+display: flex;
+justify-content: space-between;
+flex-direction: column;
+}
+.gallery__item{
+display: block;
+  width: 100%;
+  border: 2px black solid;
+  max-width: calc(25% - 15px);
+  
 }
