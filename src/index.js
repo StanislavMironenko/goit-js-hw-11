@@ -64,6 +64,12 @@ async function markup() {
   }
 //  if (maxAmountPages > 1) {
 //    refs.btnLoadMore.classList.remove('is-hidden');
+//  }
+if (refs.gallery.innerHTML === '' && data.length !== 0) {
+  Notiflix.Notify.info(`Hooray! We found ${allData.totalHits} images.`);
+}
+
+createCards(data);
 if (maxAmountPages === apiService.page - 1) {
   //  refs.btnLoadMore.classList.add('is-hidden');
   Notiflix.Notify.info(
@@ -71,12 +77,6 @@ if (maxAmountPages === apiService.page - 1) {
   );
 return
 }
-//  }
-  if (refs.gallery.innerHTML === '' && data.length !== 0) {
-    Notiflix.Notify.info(`Hooray! We found ${allData.totalHits} images.`);
-  }
-   
-  createCards(data);
 }
 
 function createCards(data) {
@@ -120,7 +120,8 @@ function createNewList(entries) {
   entries.forEach(entry => {
     if(entry.isIntersecting){
       if (maxAmountPages === apiService.page - 1) {   
-       
+      //  console.log(maxAmountPages);
+      //  console.log(apiService.page);
         return
       };
     markup();
