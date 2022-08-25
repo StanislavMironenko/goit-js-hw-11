@@ -1,5 +1,6 @@
 import ApiService from './js/pictureApiService';
 import Notiflix from 'notiflix';
+import throttle from 'lodash.throttle';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
@@ -7,49 +8,77 @@ const refs = {
   gallery: document.querySelector('.gallery'),
   form: document.querySelector('.search-form'),
   btnLoadMore: document.querySelector('.load-more'),
+  guard: document.querySelector('.js-guard'),
 };
-var lightbox = new SimpleLightbox('.gallery a', {
-  captionsData: 'tags',
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
   captionDelay: 250,
 });
-
+const options = {
+  root: null,
+  rootMargin: '500px',
+  threshold: 1,
+};
+// const observer = new IntersectionObserver(createNewList, options);
 const apiService = new ApiService();
-//
+let maxAmountPages = 0;
+
 refs.form.addEventListener('submit', getSearch);
 refs.btnLoadMore.addEventListener('click', loadMore);
 
-function getSearch(e) {
-    e.preventDefault();
-    console.log(refs.btnLoadMore.classList);
-    refs.btnLoadMore.classList.remove('is-hidden');
-  apiService.resetPage();
-  apiService.query = e.currentTarget.elements.searchQuery.value;
-  refs.gallery.innerHTML = '';
 
-  try {
-    markup();
-  } catch (error) {
-    console.log(error);
-  }
+
+
+function getSearch(e) {
+    e.preventDefault();  
+    
+    apiService.resetPage();
+    apiService.query = e.currentTarget.elements.searchQuery.value;
+    refs.gallery.innerHTML = '';
+  
+    markup();    
+//  observer.observe(refs.guard);
 }
 
-function loadMore() {
-  markup();
+async function loadMore() {
+ await markup();
+ const { height: cardHeight } = document
+  .querySelector('.gallery')
+  .firstElementChild.getBoundingClientRect();
+  
+
+  window.scrollBy({
+    top: cardHeight *2,
+    behavior: 'smooth',
+  }, );
 }
 async function markup() {
-    const allData = await apiService.getPicture();
-    if (refs.btnLoadMore.classList.contains('.is-hidden')) {
-        console.log("hello")
-        Notiflix.Notify.failure(`Hooray! We found ${allData.totalHits} images.`);
-    }
+  const allData = await apiService.getPicture();
   const data = await allData.hits;
+  maxAmountPages = Math.ceil(allData.totalHits / apiService.per_page);
 
   if (data.length === 0) {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
   }
+ if (maxAmountPages > 1) {
+   refs.btnLoadMore.classList.remove('is-hidden');
+ }
+  if (refs.gallery.innerHTML === '') {
+    Notiflix.Notify.info(`Hooray! We found ${allData.totalHits} images.`);
+  }
+  if (maxAmountPages === apiService.page - 1) {
+     refs.btnLoadMore.classList.add('is-hidden');
+    Notiflix.Notify.info(
+      "We're sorry, but you've reached the end of search results."
+    );
+   
+  }
+ 
 
+  console.log(maxAmountPages);
+  console.log(apiService.page);
   createCards(data);
 }
 
@@ -65,38 +94,41 @@ function createCards(data) {
         downloads,
         largeImageURL,
       }) => {
-        return ` <a class="gallery__item"
-        href="${largeImageURL}">            
-  <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+        return `<div class="photo-card">            
+  <a class="gallery__item"
+        href="${largeImageURL}"><img src="${webformatURL}" alt="${tags}" loading="lazy" /></a>
   <div class="info">
     <p class="info-item">
-      <b>Likes: ${likes}</b>
+      <b>Likes: </b>${likes}
     </p>
     <p class="info-item">
-      <b>Views: ${views}</b>
+      <b>Views: </b>${views}
     </p>
     <p class="info-item">
-      <b>Comments: ${comments}</b>
+      <b>Comments: </b>${comments}
     </p>
     <p class="info-item">
-      <b>Downloads: ${downloads}</b>
+      <b>Downloads:</b> ${downloads}
     </p>
-  </div>
-</a>`;
+  </div></div>
+`;
       }
     )
     .join('');
   refs.gallery.insertAdjacentHTML('beforeend', cards);
+   lightbox.refresh();
 }
+// function createNewList(entries) {
+//   console.log(entries)
+//   entries.forEach(entry => {
+//     if(entry.isIntersecting){
+//       if (maxAmountPages === apiService.page - 1) {   
+       
+//         return
+//       };
+//     markup();
+//     }
+//   });
+// };
 
 
-
-refs.gallery.addEventListener('click', e => {
-    e.preventDefault();
-    lightbox.open()
-  lightbox.on('show.simplelightbox', function () {
-   console.log("hello")
-  });
-  console.log(e.currentTarget);
-  console.log(e.target);
-});

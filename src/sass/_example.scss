@@ -1,16 +1,40 @@
+body{
+  background-color: azure;
+}
 button{
-  margin-left: 20px;
+  
+  padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    border-color: transparent;
+    background-color: rgb(93, 147, 201);
+    color: #fff;
+    
 }
 a{
   text-decoration: none;
 }
+p{
+    margin: 0;
+}
+.container{
+  max-width: 1400px;
+  padding: 0 15px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .search-form{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  background-color: aqua;
-  margin-bottom: 20px;
+  width: 100%;
+    display: flex;
+    background-color: rgb(75, 99, 233);
+    padding: 14px;
+    justify-content: center;
+}
+.search-form>input{
+  width: 30%;
+    font-size: 20px;
 }
 .is-hidden{
   
@@ -30,30 +54,45 @@ a{
 .gallery{
   display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 30px;
 }
-
+.photo-card{
+border: 1px solid grey;
+border-radius: 3px;
+ width: calc(25% - 15px);
+}
 img{
+  display: block;
   width: 100%;
- height: 330px;
+ height: 240px;
 }
-.gallery__item:not(:last-child) {
+.photo-card:not(:last-child) {
   margin-bottom: 30px;
 }
 .info{
-  display: flex;
-  font-size: 18px;
-  color: black;
+  font-size: 15px;
+  background-color: #fff;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+   
+  
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+      0px 2px 1px rgba(0, 0, 0, 0.2);
 }
 .info-item{
 display: flex;
-justify-content: space-between;
-flex-direction: column;
+  flex-direction: column;
+  align-items: center;
 }
-.gallery__item{
-display: block;
-  width: 100%;
-  border: 2px black solid;
-  max-width: calc(25% - 15px);
+.load-more{
+
+  margin-bottom: 30px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+      0px 2px 1px rgba(0, 0, 0, 0.2);
   
 }
