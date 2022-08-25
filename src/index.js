@@ -120,9 +120,7 @@ function createNewList(entries) {
   entries.forEach(entry => {
     if(entry.isIntersecting){
       if (maxAmountPages === apiService.page - 1) {   
-      //  console.log(maxAmountPages);
-      //  console.log(apiService.page);
-        return
+             return
       };
     markup();
     }
