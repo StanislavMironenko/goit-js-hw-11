@@ -64,16 +64,16 @@ async function markup() {
   }
 //  if (maxAmountPages > 1) {
 //    refs.btnLoadMore.classList.remove('is-hidden');
+if (maxAmountPages === apiService.page - 1) {
+  //  refs.btnLoadMore.classList.add('is-hidden');
+  Notiflix.Notify.info(
+    "We're sorry, but you've reached the end of search results."
+  );
+return
+}
 //  }
-  if (refs.gallery.innerHTML === '') {
+  if (refs.gallery.innerHTML === '' && data.length !== 0) {
     Notiflix.Notify.info(`Hooray! We found ${allData.totalHits} images.`);
-  }
-  if (maxAmountPages === apiService.page - 1) {
-    //  refs.btnLoadMore.classList.add('is-hidden');
-    Notiflix.Notify.info(
-      "We're sorry, but you've reached the end of search results."
-    );
-   
   }
    
   createCards(data);
