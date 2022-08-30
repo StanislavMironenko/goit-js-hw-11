@@ -1,4 +1,6 @@
 const axios = require('axios').default;
+
+
 export default class ApiService {
   constructor() {
     this.searchQuery = '';
@@ -21,6 +23,7 @@ export default class ApiService {
       },
     });
     this.incrementPage();
+    
     return respons.data;
   }
 
