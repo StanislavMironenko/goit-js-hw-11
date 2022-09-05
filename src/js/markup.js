@@ -9,6 +9,7 @@ export default async function markup() {
   const allData = await apiService.getPicture();
   const data = await allData.hits;
   maxAmountPages = Math.ceil(allData.totalHits / apiService.per_page);
+  console.log(allData);
   if (data.length === 0) {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'

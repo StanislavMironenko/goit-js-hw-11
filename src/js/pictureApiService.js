@@ -24,6 +24,7 @@ export default class ApiService {
     });
     this.incrementPage();
     
+    
     return respons.data;
   }
 
