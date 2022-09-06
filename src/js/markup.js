@@ -14,6 +14,7 @@ export default async function markup() {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
     );
+    return
   }
   //  if (maxAmountPages > 1) {
   //    refs.btnLoadMore.classList.remove('is-hidden');
@@ -23,7 +24,8 @@ export default async function markup() {
   }
 
   createCards(data);
-  if (maxAmountPages === apiService.page - 1) {
+  
+  if (maxAmountPages === apiService.page - 1 && maxAmountPages > 1) {
     //  refs.btnLoadMore.classList.add('is-hidden');
     Notiflix.Notify.info(
       "We're sorry, but you've reached the end of search results."

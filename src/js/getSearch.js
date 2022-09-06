@@ -10,11 +10,13 @@ form.addEventListener('submit', getSearch);
 
 export default async function getSearch(e) {
   e.preventDefault();
+  observer.disconnect(guard);
   let searchValue = e.currentTarget.elements.searchQuery.value.trim();
   if (searchValue === apiService.query || searchValue==='') {
     Notiflix.Notify.failure(
-      'Sorry, there are no images matching your search query. Please try again.'
-      );
+      ' Please try again.'
+    );
+   
       return;
     } else {
       apiService.resetPage();
@@ -22,10 +24,9 @@ export default async function getSearch(e) {
       apiService.query = e.currentTarget.elements.searchQuery.value.trim();
       
       gallery.innerHTML = '';
-      console.log("getSearch!!!")
+      
       markup();
     } 
-    observer.disconnect(guard);
 
  
 }
