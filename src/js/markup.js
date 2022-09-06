@@ -1,15 +1,15 @@
 import Notiflix from 'notiflix';
 import { apiService } from './getSearch';
 import createCards from './createCards'
-import { gallery } from './elementsOfDOM';
-
+import { gallery, guard } from './elementsOfDOM';
+import { observer } from './observer';
 export  let maxAmountPages = 0;
 
 export default async function markup() {
   const allData = await apiService.getPicture();
   const data = await allData.hits;
   maxAmountPages = Math.ceil(allData.totalHits / apiService.per_page);
-  console.log(allData);
+ 
   if (data.length === 0) {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
@@ -30,4 +30,5 @@ export default async function markup() {
     );
     return;
   }
+    observer.observe(guard);
 }

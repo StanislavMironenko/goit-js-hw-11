@@ -9,13 +9,17 @@ const options = {
 };
 export const observer = new IntersectionObserver(createNewList, options);
 
-function createNewList(entries) {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
+async function createNewList(entries) {
+  entries.forEach(async entry => {
+    if (entry.isIntersecting) {   
+
       if (maxAmountPages === apiService.page - 1) {
+      
         return;
       }
-      markup();
+     
+     await markup();
     }
+    
   });
 }
